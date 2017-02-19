@@ -24,10 +24,6 @@ public class ServerTest {
 			}
 			else if(request.getUri().matches("")){
 				name = "root";
-				Double x = 1.0; //A deliberately long wait to test concurrency
-				for(int i = Integer.MAX_VALUE; i> Integer.MIN_VALUE; i--){
-					x++;
-				}
 			}
 			else {
 				throw new HttpException(HttpCode.NOT_FOUND,
@@ -56,7 +52,6 @@ public class ServerTest {
 			HtmlArray body = new HtmlArray();
 			HtmlArray head = new HtmlArray();
 			head.add(title);
-			
 			body.addAll(
 					new HtmlObject(
 							"h1", null, "Error: "+e.getErrCode().toString()),

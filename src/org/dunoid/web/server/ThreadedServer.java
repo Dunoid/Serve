@@ -119,6 +119,7 @@ public class ThreadedServer implements Server, Runnable{
 						httpEx = new HttpException(HttpCode.INTERNAL_ERROR, e.toString());
 					}
 					eHandler.respond(httpEx, request).write(out,  0);
+					e.printStackTrace();
 					out.flush();
 				}
 			}

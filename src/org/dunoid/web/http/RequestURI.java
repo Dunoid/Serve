@@ -116,7 +116,11 @@ public class RequestURI implements Iterable<RequestURI>{
 	
 	@Override
 	public String toString(){
-		return "/"+fileName+
-				(subDirectory == null? "" : subDirectory.toString());
+		if(isEnd()){
+			return fileName;
+		}
+		else {
+			return this.fileName + "/" +subDirectory.toString();
+		}
 	}
 }
