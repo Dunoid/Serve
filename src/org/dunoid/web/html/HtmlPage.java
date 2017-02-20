@@ -5,6 +5,7 @@ import java.io.OutputStream;
 
 import org.dunoid.web.http.HttpData;
 import org.dunoid.web.http.HttpData.HttpCode;
+import org.dunoid.web.http.HttpData.MIME_Type;
 
 public class HtmlPage extends HtmlArray {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class HtmlPage extends HtmlArray {
 	}
 	@Override
 	public void write(OutputStream stream, int tabs) throws IOException{
-		stream.write(HttpData.httpHeader(status, "text/html").getBytes());
+		stream.write(HttpData.httpHeader(status, MIME_Type.HTML).getBytes());
 		super.write(stream, tabs);
 	}
 

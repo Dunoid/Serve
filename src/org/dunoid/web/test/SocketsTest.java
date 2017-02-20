@@ -9,6 +9,7 @@ import java.net.Socket;
 
 import org.dunoid.web.http.HttpData;
 import org.dunoid.web.http.HttpData.HttpCode;
+import org.dunoid.web.http.HttpData.MIME_Type;
 
 public class SocketsTest {
 	public static void main(String[] args){
@@ -38,7 +39,7 @@ public class SocketsTest {
 				System.out.println("Getting input");
 				
 				String line;
-				out.write(HttpData.httpHeader(HttpCode.OK, "text/html"));
+				out.write(HttpData.httpHeader(HttpCode.OK, MIME_Type.TEXT_PLAIN));
 				
 				while((line = in.readLine()) != null ){
 					if(line.length() == 0){

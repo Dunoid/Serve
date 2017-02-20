@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.dunoid.web.http.HttpData.HttpCode;
+import org.dunoid.web.http.HttpData.MIME_Type;
 
 /**
  * Exactly what it says on the tin, this is the most basic file
@@ -49,7 +50,7 @@ public class BasicFileRequestHandler implements RequestHandler {
 		else {
 			try {
 				String name=requestPath.getFileName().toString();
-				String mimeType=HttpData.MIMEfromFilename(name);
+				MIME_Type mimeType=HttpData.MIMEfromFilename(name);
 				
 				InputStream in = new FileInputStream(requestPath.toFile());
 				return new HttpFileResponse(mimeType, in);

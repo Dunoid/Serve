@@ -1,5 +1,9 @@
 package org.dunoid.web.http;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class HttpData {
 	public static enum HttpCode {
 		/**
@@ -99,41 +103,58 @@ public class HttpData {
 			return Integer.toString(code)+"/"+super.name();
 		}
 	}
-	public static final String httpHeader(HttpCode status, String mime){
+	public static final String httpHeader(HttpCode status, MIME_Type mime){
 		return("HTTP/1.1 "+status
-				+"\nContent-Type: "+mime+" \n\n");
+				+"\nContent-Type: "+mime.toString()+" \n\n");
 	}
 	
-	public static String[] img_extensions = {
-		"png",
-		"svg",
-		"jpg",
-		"bmp",
-		"jpeg",
-		"tif", 
-		"gif"
-	};
-	public static String MIMEfromFilename(String file){
-		file = file.toLowerCase();
-		for(String s : img_extensions){
-			if(file.endsWith('.'+s)){
-				if(s.equals("svg")){
-					s = "svg+xml";
-				}
-				return "image/"+s;
+	public static Map<String, MIME_Type>  MIME_types;
+	
+	static{
+		MIME_types = new HashMap<>();
+	}
+	
+	public static enum MIME_Type{
+		HTML("text/html", "html", "htm", "htx"),
+		CSS("text/css", "css"),
+		JSON("text/json", "json"),
+		CALENDAR("text/calendar", "ics"),
+		CSV("text/csv", "csv"),
+		TEXT_PLAIN("text/plain", "txt", "js"),
+		
+		SVG("image/svg+xml", "svg"),
+		PNG("image/png", "png"),
+		JPEG("image/jpeg", "jpg", "jpeg"),
+		TIFF("image/tiff", "tiff"),
+		BTIF("image/prs.btif", "btif"),
+		ICON("image/x-icon", "ico"),
+		GIF("image/gif", "gif"),
+		
+		MP4("audio/mp4", "mp4"),
+		MPEG("audio/mpeg", "mpeg"),
+		OGG("audio/ogg", "ogg"),
+		MIDI("audio/midi", "mid", "midi");
+		
+		private String type;
+		MIME_Type(String s, String... extensions){
+			type = s;
+			for(String ext : extensions){
+				MIME_types.put(ext, this);
 			}
 		}
-		if(file.endsWith(".html")){
-			return "text/html";
+		@Override
+		public String toString(){
+			return type;
 		}
-		else if(file.endsWith(".css")) {
-			return "text/css";
-		}
-		else if(file.endsWith(".json")){
-			return "text/json";
+	}
+	public static MIME_Type MIMEfromFilename(String file){
+		String[] stringlist = file.split(".");
+		String ext = stringlist[stringlist.length-1];
+		if(stringlist.length > 1 && MIME_types.containsKey(ext)){
+			return MIME_types.get(ext);
 		}
 		else {
-			return "text/plain";
+			return MIME_Type.TEXT_PLAIN;
 		}
 	}
 	

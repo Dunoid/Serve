@@ -4,11 +4,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.dunoid.web.http.HttpData.HttpCode;
+import org.dunoid.web.http.HttpData.MIME_Type;
 
 public class HttpFileResponse implements HttpResponse {
 	private InputStream in;
-	private String mime;
-	public HttpFileResponse(String mimeType, InputStream in) {
+	private MIME_Type mime;
+	public HttpFileResponse(MIME_Type mimeType, InputStream in) {
 		this.in = in;
 		mime = mimeType;
 	}
