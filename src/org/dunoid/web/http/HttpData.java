@@ -148,7 +148,12 @@ public class HttpData {
 		}
 	}
 	public static MIME_Type MIMEfromFilename(String file){
-		String[] stringlist = file.split(".");
+		String[] stringlist = file.split("\\.");
+		
+		if(stringlist.length == 0){
+			return MIME_Type.TEXT_PLAIN;
+		}
+
 		String ext = stringlist[stringlist.length-1];
 		if(stringlist.length > 1 && MIME_types.containsKey(ext)){
 			return MIME_types.get(ext);

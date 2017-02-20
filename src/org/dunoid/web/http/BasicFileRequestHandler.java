@@ -40,18 +40,20 @@ public class BasicFileRequestHandler implements RequestHandler {
 	}
 	@Override
 	public HttpResponse respond(HttpRequest request) throws HttpException {
-		Path requestPath = home.resolve(request.uri.toString());
+		String name=request.uri.toString();
+		
+		Path requestPath = home.resolve(name);
+		MIME_Type mimeType=HttpData.MIMEfromFilename(name);
+		
 		if(Files.isDirectory(requestPath)){
 			requestPath = requestPath.resolve("index.html");
+			mimeType = MIME_Type.HTML;
 		}
 		if(!Files.exists(requestPath)){
 			throw new HttpException(HttpCode.NOT_FOUND);
 		}
 		else {
 			try {
-				String name=requestPath.getFileName().toString();
-				MIME_Type mimeType=HttpData.MIMEfromFilename(name);
-				
 				InputStream in = new FileInputStream(requestPath.toFile());
 				return new HttpFileResponse(mimeType, in);
 			} catch (FileNotFoundException e) {
