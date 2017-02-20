@@ -38,7 +38,7 @@ public class SocketsTest {
 				System.out.println("Getting input");
 				
 				String line;
-				out.write(HttpData.httpHeader(HttpCode.OK));
+				out.write(HttpData.httpHeader(HttpCode.OK, "text/html"));
 				
 				while((line = in.readLine()) != null ){
 					if(line.length() == 0){

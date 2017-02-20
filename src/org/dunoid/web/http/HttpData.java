@@ -99,7 +99,42 @@ public class HttpData {
 			return Integer.toString(code)+"/"+super.name();
 		}
 	}
-	public static final String httpHeader(HttpCode status){
-		return("HTTP/1.1 "+status+" \n\n");
+	public static final String httpHeader(HttpCode status, String mime){
+		return("HTTP/1.1 "+status
+				+"\nContent-Type: "+mime+" \n\n");
 	}
+	
+	public static String[] img_extensions = {
+		"png",
+		"svg",
+		"jpg",
+		"bmp",
+		"jpeg",
+		"tif", 
+		"gif"
+	};
+	public static String MIMEfromFilename(String file){
+		file = file.toLowerCase();
+		for(String s : img_extensions){
+			if(file.endsWith('.'+s)){
+				if(s.equals("svg")){
+					s = "svg+xml";
+				}
+				return "image/"+s;
+			}
+		}
+		if(file.endsWith(".html")){
+			return "text/html";
+		}
+		else if(file.endsWith(".css")) {
+			return "text/css";
+		}
+		else if(file.endsWith(".json")){
+			return "text/json";
+		}
+		else {
+			return "text/plain";
+		}
+	}
+	
 }

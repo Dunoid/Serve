@@ -30,7 +30,7 @@ public class HtmlPage extends HtmlArray {
 	}
 	@Override
 	public void write(OutputStream stream, int tabs) throws IOException{
-		stream.write(HttpData.httpHeader(status).getBytes());
+		stream.write(HttpData.httpHeader(status, "text/html").getBytes());
 		super.write(stream, tabs);
 	}
 

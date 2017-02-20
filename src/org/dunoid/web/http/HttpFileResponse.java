@@ -7,12 +7,14 @@ import org.dunoid.web.http.HttpData.HttpCode;
 
 public class HttpFileResponse implements HttpResponse {
 	private InputStream in;
-	public HttpFileResponse(InputStream in) {
+	private String mime;
+	public HttpFileResponse(String mimeType, InputStream in) {
 		this.in = in;
+		mime = mimeType;
 	}
 	@Override
 	public void write(OutputStream out, int tabulation) throws IOException{
-		out.write(HttpData.httpHeader(HttpCode.ACCEPTED).getBytes());
+		out.write(HttpData.httpHeader(HttpCode.OK, mime).getBytes());
 		byte[] buffer = new byte[2048];
 		int count;
 		while((count = in.read(buffer)) > 0){
